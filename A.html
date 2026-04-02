@@ -1005,13 +1005,51 @@
             object-fit: cover;
             border-radius: 16px;
         }
+
+        /* ========== LOADER OVERLAY ========== */
+        .loader-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(255,255,255,0.95);
+            z-index: 3000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+        }
+        .loader-overlay.loader-hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+        body.page-loading {
+            visibility: hidden;
+            overflow: hidden;
+        }
+        body.page-loaded {
+            visibility: visible;
+        }
+        .spinner {
+            width: 60px;
+            height: 60px;
+            border: 8px solid #e8e8e8;
+            border-top: 8px solid var(--primary-1);
+            border-radius: 50%;
+            animation: spin 0.9s linear infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
     </style>
 </head>
-<body>
+<body class="page-loading">
+    <div id="loader" class="loader-overlay">
+        <div class="spinner"></div>
+    </div>
     <!-- ========== TOP BAR ========== -->
     <div class="top-bar">
         <div class="top-container">
-            <div><i class="fas fa-truck"></i> Free shipping on orders over $100 | 30-Day Returns Guaranteed</div>
+            <div><i class="fas fa-truck"></i> Free shipping on orders over UGX 370,000 | 30-Day Returns Guaranteed</div>
             <div class="top-links">
                 <a href="#" onclick="alert('Contact us: support@africanscovia.com | +1 (555) 123-4567')"><i class="fas fa-headset"></i> Help Center</a>
                 <a href="#" onclick="alert('Track your order with your Order ID')"><i class="fas fa-map-marker-alt"></i> Track Order</a>
@@ -1087,7 +1125,7 @@
             <div class="filter-section">
                 <h4>💰 Price Range</h4>
                 <input type="range" class="price-range" id="priceFilter" min="0" max="500" step="10" value="500">
-                <div style="margin-top: 8px;">$0 - $<span id="priceValue">500</span></div>
+                <div style="margin-top: 8px;">UGX 0 - UGX <span id="priceValue">500</span> (USD equivalent)</div>
             </div>
             <div class="filter-section">
                 <h4>📂 Categories</h4>
@@ -1115,7 +1153,7 @@
                     <span>🔥 FLASH SALE - Up to 50% OFF!</span>
                 </div>
                 <div class="timer" id="timer">
-                    <span>00</span>:<span>00</span>:<span>00</span>
+                    <span id="hours">00</span>:<span id="minutes">00</span>:<span id="seconds">00</span>
                 </div>
             </div>
 
@@ -1326,6 +1364,21 @@
             console.log("Persistence error:", err);
         });
         
+        // ========== CURRENCY PICKER & FORMATTER (UGANDA SHILLINGS) ==========
+        const currencySymbol = 'UGX';
+        const usdToUgxRate = 3700; // adjust to current exchange rate
+
+        function toUGX(amountUSD) {
+            return Math.round(amountUSD * usdToUgxRate);
+        }
+
+        function formatCurrency(amountUSD) {
+            if (typeof amountUSD !== 'number' || Number.isNaN(amountUSD)) {
+                return `${currencySymbol} 0`;
+            }
+            return `${currencySymbol} ${toUGX(amountUSD).toLocaleString()}`;
+        }
+
         // ========== PRODUCT DATABASE WITH AUTHENTIC AFRICAN ITEMS ==========
         const products = [
             { id: 1, name: "Royal Dashiki Set", category: "men", price: 89.99, oldPrice: 139.99, discount: 36, brand: "Scovia", rating: 4.8, reviews: 245, seller: "Scovia Originals", image: "https://images.pexels.com/photos/3998425/pexels-photo-3998425.jpeg?w=400", description: "Handcrafted premium dashiki with intricate embroidery. Made from 100% cotton, perfect for weddings and ceremonies.", sizes: ["S","M","L","XL","XXL"], stock: 85 },
@@ -1566,7 +1619,7 @@
                 updateCounters();
                 closeModal('checkoutModal');
                 
-                alert(`✅ Order placed!\nOrder ID: ${orderRef.id}\nTotal: $${total.toFixed(2)}\nThank you for shopping with African Scovia!\nWe'll send a confirmation email to ${currentUser.email}`);
+                alert(`✅ Order placed!\nOrder ID: ${orderRef.id}\nTotal: ${formatCurrency(total)}\nThank you for shopping with African Scovia!\nWe'll send a confirmation email to ${currentUser.email}`);
                 showView('home');
             } catch (error) {
                 console.error("Order error:", error);
@@ -1723,8 +1776,8 @@
                             <span style="color:#94A3B8;">(${product.reviews})</span>
                         </div>
                         <div>
-                            <span class="price">$${product.price}</span>
-                            ${product.oldPrice ? `<span class="old-price">$${product.oldPrice}</span>` : ''}
+                            <span class="price">${formatCurrency(product.price)}</span>
+                            ${product.oldPrice ? `<span class="old-price">${formatCurrency(product.oldPrice)}</span>` : ''}
                         </div>
                         <button class="btn-add" onclick="event.stopPropagation(); addToCart(${product.id})">
                             <i class="fas fa-shopping-cart"></i> Add to Cart
@@ -1754,8 +1807,8 @@
                             <span style="color:#94A3B8;"> ${product.reviews} reviews</span>
                         </div>
                         <div style="margin: 24px 0;">
-                            <span class="price" style="font-size: 36px;">$${product.price}</span>
-                            ${product.oldPrice ? `<span class="old-price" style="font-size: 18px;">$${product.oldPrice}</span>` : ''}
+                            <span class="price" style="font-size: 36px;">${formatCurrency(product.price)}</span>
+                            ${product.oldPrice ? `<span class="old-price" style="font-size: 18px;">${formatCurrency(product.oldPrice)}</span>` : ''}
                             ${product.discount ? `<span style="background: #C4452C; color: white; padding: 4px 12px; border-radius: 50px; margin-left: 12px; font-size: 14px;">Save ${product.discount}%</span>` : ''}
                         </div>
                         <p style="color: var(--text-muted); line-height: 1.6; margin: 20px 0;">${product.description}</p>
@@ -1789,7 +1842,7 @@
                                 <div style="cursor:pointer; text-align:center; padding: 16px; background: var(--bg-card); border-radius: 20px; transition: all 0.3s; border: 1px solid var(--border-light);" onclick="showProductDetail(${p.id});">
                                     <img src="${p.image}" style="width:100%; height: 140px; object-fit:cover; border-radius: 16px;">
                                     <div style="font-weight: 600; margin-top: 12px;">${p.name}</div>
-                                    <div style="color: var(--primary-1); font-weight: bold;">$${p.price}</div>
+                                    <div style="color: var(--primary-1); font-weight: bold;">${formatCurrency(p.price)}</div>
                                 </div>
                             `).join('')}
                         </div>
@@ -1814,7 +1867,7 @@
                         <div class="recent-item" onclick="showProductDetail(${p.id})">
                             <img src="${p.image}" alt="${p.name}">
                             <div style="font-weight: 600; margin-top: 10px;">${p.name}</div>
-                            <div style="color: var(--primary-1); font-weight: bold;">$${p.price}</div>
+                            <div style="color: var(--primary-1); font-weight: bold;">${formatCurrency(p.price)}</div>
                         </div>
                     `).join('')}
                 </div>
@@ -1884,7 +1937,7 @@
                             <img src="${product.image}" style="width:70px; height:70px; object-fit:cover; border-radius:16px;">
                             <div>
                                 <div><strong>${product.name}</strong></div>
-                                <div class="price" style="font-size: 16px;">$${product.price}</div>
+                                <div class="price" style="font-size: 16px;">${formatCurrency(product.price)}</div>
                             </div>
                         </div>
                         <div style="display:flex; gap:12px; align-items:center;">
@@ -1892,7 +1945,7 @@
                             <span style="min-width:40px; text-align:center; font-weight:600;">${item.quantity}</span>
                             <button onclick="updateCartQuantity(${item.id}, ${item.quantity + 1})" style="width:36px; height:36px; border-radius:50%; border:1px solid var(--border-medium); background:white; cursor:pointer;">+</button>
                         </div>
-                        <div style="min-width:90px; text-align:right; font-weight:600;">$${total.toFixed(2)}</div>
+                        <div style="min-width:90px; text-align:right; font-weight:600;">${formatCurrency(total)}</div>
                         <button onclick="removeFromCartItem(${item.id})" style="background:none; border:none; color:#C4452C; font-size:20px; cursor:pointer;">✖</button>
                     </div>
                 `;
@@ -1904,9 +1957,9 @@
             container.innerHTML = `
                 ${itemsHtml}
                 <div class="cart-summary">
-                    <div class="summary-line"><span>Subtotal:</span><span>$${subtotal.toFixed(2)}</span></div>
-                    <div class="summary-line"><span>Tax (7%):</span><span>$${tax.toFixed(2)}</span></div>
-                    <div class="summary-line" style="font-size: 20px; font-weight: bold; border-top: 2px solid var(--border-light); padding-top: 16px;"><span>Total:</span><span style="color: var(--primary-1);">$${total.toFixed(2)}</span></div>
+                    <div class="summary-line"><span>Subtotal:</span><span>${formatCurrency(subtotal)}</span></div>
+                    <div class="summary-line"><span>Tax (7%):</span><span>${formatCurrency(tax)}</span></div>
+                    <div class="summary-line" style="font-size: 20px; font-weight: bold; border-top: 2px solid var(--border-light); padding-top: 16px;"><span>Total:</span><span style="color: var(--primary-1);">${formatCurrency(total)}</span></div>
                 </div>
                 <div style="display:flex; gap:16px; justify-content:center; margin-top: 28px;">
                     <button class="btn-filter" onclick="showCheckout()">Proceed to Checkout</button>
@@ -1961,7 +2014,7 @@
                     </select>
                 </div>
                 <div class="cart-summary">
-                    <div class="summary-line"><strong>Total to Pay:</strong><strong style="color: var(--primary-1); font-size: 28px;">$${total.toFixed(2)}</strong></div>
+                    <div class="summary-line"><strong>Total to Pay:</strong><strong style="color: var(--primary-1); font-size: 28px;">${formatCurrency(total)}</strong></div>
                 </div>
                 <button class="btn-filter" onclick="placeOrder()" style="width:100%; padding: 16px;">Place Order</button>
             `;
@@ -1990,7 +2043,7 @@
                     <img src="${product.image}" alt="${product.name}">
                     <div class="product-info">
                         <div class="product-name">${product.name}</div>
-                        <div class="price">$${product.price}</div>
+                        <div class="price">${formatCurrency(product.price)}</div>
                         <button class="btn-add" onclick="event.stopPropagation(); addToCart(${product.id})">Add to Cart</button>
                     </div>
                 </div>
@@ -2031,7 +2084,7 @@
                         <div><strong>Order ID:</strong> ${order.id.substring(0, 12)}...</div>
                         <div><strong>Date:</strong> ${order.date}</div>
                         <div><strong>Items:</strong> ${order.items.length} item(s)</div>
-                        <div><strong>Total:</strong> <span class="price">$${order.total.toFixed(2)}</span></div>
+                        <div><strong>Total:</strong> <span class="price">${formatCurrency(order.total)}</span></div>
                         <div><strong>Status:</strong> <span style="color: var(--primary-1);">${order.status}</span></div>
                     </div>
                 `).join('')}
@@ -2069,15 +2122,26 @@
         // ========== FLASH SALE TIMER ==========
         function startFlashSaleTimer() {
             let timeLeft = 7200;
+            const hoursEl = document.getElementById('hours');
+            const minutesEl = document.getElementById('minutes');
+            const secondsEl = document.getElementById('seconds');
+
             const timer = setInterval(() => {
-                if (timeLeft <= 0) { clearInterval(timer); document.getElementById('flashSale').style.display = 'none'; }
-                else {
-                    const hours = Math.floor(timeLeft / 3600);
-                    const minutes = Math.floor((timeLeft % 3600) / 60);
-                    const seconds = timeLeft % 60;
-                    document.getElementById('timer').innerHTML = `<span>${String(hours).padStart(2,'0')}</span>:<span>${String(minutes).padStart(2,'0')}</span>:<span>${String(seconds).padStart(2,'0')}</span>`;
-                    timeLeft--;
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    const flashSale = document.getElementById('flashSale');
+                    if (flashSale) flashSale.style.display = 'none';
+                    return;
                 }
+                const hours = Math.floor(timeLeft / 3600);
+                const minutes = Math.floor((timeLeft % 3600) / 60);
+                const seconds = timeLeft % 60;
+
+                if (hoursEl) hoursEl.textContent = String(hours).padStart(2, '0');
+                if (minutesEl) minutesEl.textContent = String(minutes).padStart(2, '0');
+                if (secondsEl) secondsEl.textContent = String(seconds).padStart(2, '0');
+
+                timeLeft--;
             }, 1000);
         }
 
@@ -2195,6 +2259,8 @@
             
             document.getElementById('homeView').classList.add('active');
             document.querySelector('.main-layout').style.display = 'grid';
+            const loader = document.getElementById('loader');
+            if (loader) loader.classList.add('loader-hidden');
         }
         
         init();
