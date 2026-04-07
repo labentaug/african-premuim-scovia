@@ -1,0 +1,1087 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Ubuntu Styles - Premium African Fashion Marketplace</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/11.0.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/11.0.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/11.0.0/firebase-database-compat.js"></script>
+    
+    <style>
+        /* ========== PROFESSIONAL DESIGN SYSTEM ========== */
+        :root {
+            --primary: #D2691E;
+            --primary-dark: #B85C1A;
+            --primary-light: #F4A460;
+            --primary-soft: #FFF2E6;
+            --secondary: #2C3E50;
+            --accent-gold: #FFD700;
+            --accent-red: #E74C3C;
+            --accent-green: #27AE60;
+            --bg-light: #FFFBF5;
+            --bg-white: #FFFFFF;
+            --text-dark: #2C3E50;
+            --text-gray: #5D6D7E;
+            --border-light: #F0E5D8;
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.05);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+            --shadow-lg: 0 8px 24px rgba(0,0,0,0.12);
+            --gradient-warm: linear-gradient(135deg, #D2691E 0%, #F4A460 100%);
+            --gradient-gold: linear-gradient(135deg, #FFD700 0%, #FFB347 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Poppins', system-ui, sans-serif;
+            background: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.5;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track { background: var(--border-light); }
+        ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 4px; }
+
+        .top-bar {
+            background: var(--secondary);
+            color: white;
+            padding: 8px 0;
+            font-size: 13px;
+        }
+        .top-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .top-links a {
+            color: #ECF0F1;
+            text-decoration: none;
+            margin-left: 24px;
+            transition: color 0.3s;
+        }
+        .top-links a:hover { color: var(--primary-light); }
+
+        .navbar {
+            background: var(--bg-white);
+            box-shadow: var(--shadow-sm);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 16px 24px;
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+        .logo a {
+            font-size: 1.8rem;
+            font-weight: 700;
+            text-decoration: none;
+            background: var(--gradient-warm);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .logo i { background: none; -webkit-text-fill-color: var(--primary); margin-right: 5px; }
+        .logo small { font-size: 0.7rem; display: block; color: var(--text-gray); -webkit-text-fill-color: var(--text-gray); }
+        
+        .search-bar { flex: 1; max-width: 550px; display: flex; }
+        .search-bar input {
+            flex: 1;
+            padding: 12px 20px;
+            border: 2px solid var(--border-light);
+            border-right: none;
+            border-radius: 50px 0 0 50px;
+            font-size: 14px;
+        }
+        .search-bar input:focus { outline: none; border-color: var(--primary); }
+        .search-bar button {
+            padding: 12px 28px;
+            background: var(--gradient-warm);
+            color: white;
+            border: none;
+            border-radius: 0 50px 50px 0;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        .nav-icons { display: flex; gap: 24px; }
+        .nav-icon {
+            text-align: center;
+            text-decoration: none;
+            color: var(--text-dark);
+            position: relative;
+            cursor: pointer;
+            background: none;
+            border: none;
+            font-size: 13px;
+        }
+        .nav-icon:hover { color: var(--primary); }
+        .nav-icon i { font-size: 1.4rem; display: block; margin-bottom: 4px; }
+        .cart-count, .wishlist-count {
+            position: absolute;
+            top: -8px;
+            right: -12px;
+            background: var(--gradient-warm);
+            color: white;
+            border-radius: 50%;
+            padding: 2px 6px;
+            font-size: 10px;
+            font-weight: bold;
+            min-width: 18px;
+        }
+
+        .category-menu {
+            background: var(--bg-white);
+            border-bottom: 1px solid var(--border-light);
+            overflow-x: auto;
+        }
+        .category-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            gap: 32px;
+        }
+        .category-container a {
+            padding: 14px 0;
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            white-space: nowrap;
+            font-size: 14px;
+            position: relative;
+        }
+        .category-container a:hover { color: var(--primary); }
+        .category-container a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient-warm);
+            transition: width 0.3s;
+        }
+        .category-container a:hover::after { width: 100%; }
+
+        .flash-sale {
+            background: var(--gradient-warm);
+            color: white;
+            padding: 18px 28px;
+            margin: 24px;
+            border-radius: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            box-shadow: var(--shadow-md);
+        }
+        .timer { display: flex; gap: 12px; font-size: 1.6rem; font-weight: bold; }
+        .timer span {
+            background: rgba(0,0,0,0.25);
+            padding: 8px 16px;
+            border-radius: 12px;
+            font-family: monospace;
+        }
+
+        .main-layout {
+            max-width: 1400px;
+            margin: 24px auto;
+            padding: 0 24px;
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 32px;
+        }
+        .sidebar {
+            background: var(--bg-white);
+            padding: 24px;
+            border-radius: 20px;
+            height: fit-content;
+            position: sticky;
+            top: 100px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-light);
+        }
+        .filter-section {
+            margin-bottom: 28px;
+            border-bottom: 1px solid var(--border-light);
+            padding-bottom: 20px;
+        }
+        .filter-section h4 { margin-bottom: 16px; color: var(--primary); font-size: 16px; }
+        .price-range { width: 100%; margin: 12px 0; accent-color: var(--primary); }
+        .filter-checkbox { display: block; margin: 12px 0; cursor: pointer; }
+        .filter-checkbox input { margin-right: 10px; accent-color: var(--primary); }
+        .btn-filter {
+            background: var(--gradient-warm);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 50px;
+            width: 100%;
+            cursor: pointer;
+            font-weight: 600;
+            margin-top: 12px;
+        }
+        .btn-reset {
+            background: var(--bg-light);
+            color: var(--text-dark);
+            border: 1px solid var(--border-light);
+            padding: 10px;
+            border-radius: 50px;
+            width: 100%;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .btn-reset:hover { border-color: var(--primary); color: var(--primary); }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 28px;
+        }
+        .product-card {
+            background: var(--bg-white);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            cursor: pointer;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-light);
+        }
+        .product-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-lg); }
+        .discount-badge {
+            position: absolute;
+            top: 16px;
+            left: 16px;
+            background: var(--accent-red);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: bold;
+            z-index: 2;
+        }
+        .wishlist-btn {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: var(--bg-white);
+            border: none;
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            cursor: pointer;
+            z-index: 2;
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .product-card img {
+            width: 100%;
+            height: 260px;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        .product-card:hover img { transform: scale(1.05); }
+        .product-info { padding: 16px; }
+        .product-name { font-weight: 700; margin-bottom: 6px; font-size: 16px; }
+        .seller-name { font-size: 12px; color: var(--text-gray); margin-bottom: 8px; }
+        .rating { color: var(--accent-gold); font-size: 13px; margin-bottom: 8px; }
+        .price { font-size: 1.4rem; font-weight: 800; color: var(--primary); }
+        .old-price {
+            text-decoration: line-through;
+            color: var(--text-gray);
+            font-size: 0.85rem;
+            margin-left: 10px;
+            font-weight: normal;
+        }
+        .btn-add {
+            width: 100%;
+            padding: 12px;
+            background: var(--gradient-warm);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            margin-top: 14px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(8px);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background: var(--bg-white);
+            max-width: 1000px;
+            width: 90%;
+            border-radius: 28px;
+            max-height: 85vh;
+            overflow-y: auto;
+            position: relative;
+        }
+        .modal-header {
+            position: sticky;
+            top: 0;
+            background: var(--bg-white);
+            padding: 20px 24px;
+            border-bottom: 1px solid var(--border-light);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .modal-header h2 { color: var(--primary); }
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 28px;
+            cursor: pointer;
+            color: var(--text-gray);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+        .close-modal:hover { background: var(--bg-light); color: var(--primary); }
+        .modal-body { padding: 24px; }
+
+        .auth-form {
+            max-width: 480px;
+            margin: 50px auto;
+            padding: 40px;
+            background: var(--bg-white);
+            border-radius: 28px;
+            box-shadow: var(--shadow-lg);
+        }
+        .auth-form h2 { text-align: center; color: var(--primary); margin-bottom: 32px; }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; margin-bottom: 8px; font-weight: 600; }
+        .form-group input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid var(--border-light);
+            border-radius: 50px;
+            font-size: 14px;
+        }
+        .form-group input:focus { outline: none; border-color: var(--primary); }
+        .auth-btn {
+            width: 100%;
+            padding: 14px;
+            background: var(--gradient-warm);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .auth-link { text-align: center; margin-top: 24px; }
+        .auth-link a { color: var(--primary); text-decoration: none; }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px;
+            background: var(--bg-white);
+            margin-bottom: 12px;
+            border-radius: 16px;
+            border: 1px solid var(--border-light);
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .cart-summary {
+            background: var(--primary-soft);
+            padding: 24px;
+            border-radius: 20px;
+            margin-top: 24px;
+        }
+        .summary-line {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 14px;
+            padding: 8px 0;
+        }
+
+        .chat-widget {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 320px;
+            background: var(--bg-white);
+            border-radius: 20px;
+            box-shadow: var(--shadow-lg);
+            display: none;
+            z-index: 1000;
+            overflow: hidden;
+        }
+        .chat-header {
+            background: var(--gradient-warm);
+            color: white;
+            padding: 16px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        .chat-body {
+            padding: 16px;
+            height: 300px;
+            overflow-y: auto;
+            background: var(--bg-light);
+        }
+        .chat-input {
+            display: flex;
+            padding: 12px;
+            border-top: 1px solid var(--border-light);
+        }
+        .chat-input input {
+            flex: 1;
+            padding: 10px 16px;
+            border: 1px solid var(--border-light);
+            border-radius: 50px;
+        }
+        .chat-toggle {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: var(--gradient-warm);
+            color: white;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 999;
+            box-shadow: var(--shadow-lg);
+        }
+
+        footer {
+            background: var(--secondary);
+            color: white;
+            margin-top: 60px;
+            padding: 48px 24px 24px;
+        }
+        .footer-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 40px;
+        }
+        .footer-section h4 { margin-bottom: 18px; color: var(--primary-light); }
+        .footer-section a {
+            display: block;
+            color: #BDC3C7;
+            text-decoration: none;
+            margin-bottom: 10px;
+            font-size: 13px;
+        }
+        .footer-section a:hover { color: var(--primary-light); }
+        .newsletter input {
+            padding: 12px;
+            width: 100%;
+            margin-bottom: 12px;
+            border: none;
+            border-radius: 50px;
+        }
+
+        .view { display: none; }
+        .view.active { display: block; }
+        .message {
+            padding: 14px;
+            border-radius: 12px;
+            margin: 16px 0;
+            text-align: center;
+        }
+        .success { background: #E8F8F5; color: #27AE60; border-left: 4px solid #27AE60; }
+        .error { background: #FDEDEC; color: #E74C3C; border-left: 4px solid #E74C3C; }
+        .user-info {
+            background: var(--primary-soft);
+            padding: 24px;
+            border-radius: 20px;
+            margin-bottom: 28px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .recently-viewed { margin-bottom: 28px; }
+        .recent-scroll {
+            display: flex;
+            gap: 16px;
+            overflow-x: auto;
+            padding: 8px 0;
+            scroll-behavior: smooth;
+        }
+        .recent-item {
+            flex: 0 0 auto;
+            width: 160px;
+            background: var(--bg-white);
+            padding: 12px;
+            border-radius: 16px;
+            cursor: pointer;
+            border: 1px solid var(--border-light);
+            text-align: center;
+        }
+        .recent-img-placeholder {
+            width: 100%;
+            height: 120px;
+            background: var(--primary-soft);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        .recent-img-placeholder img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .empty-state {
+            text-align: center;
+            padding: 60px;
+            background: var(--bg-white);
+            border-radius: 20px;
+            color: var(--text-gray);
+        }
+
+        @media (max-width: 768px) {
+            .main-layout { grid-template-columns: 1fr; }
+            .sidebar { position: static; order: 2; }
+            .nav-container { flex-direction: column; }
+            .search-bar { max-width: 100%; order: 3; }
+            .products-grid { grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); }
+        }
+    </style>
+</head>
+<body>
+    <div class="top-bar">
+        <div class="top-container">
+            <div><i class="fas fa-truck"></i> Free shipping on orders over UGX 500,000 | 30-Day Returns</div>
+            <div class="top-links">
+                <a href="#" onclick="alert('support@ubuntustyles.com')"><i class="fas fa-headset"></i> Help Center</a>
+                <a href="#" onclick="alert('Track your order')"><i class="fas fa-map-marker-alt"></i> Track Order</a>
+            </div>
+        </div>
+    </div>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <a href="#" onclick="showView('home')">
+                    <i class="fas fa-crown"></i> Ubuntu Styles
+                    <small>Where Africa Meets Style</small>
+                </a>
+            </div>
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="Search dashiki, kente, shea butter...">
+                <button onclick="searchProducts()"><i class="fas fa-search"></i> Search</button>
+            </div>
+            <div class="nav-icons">
+                <div class="nav-icon" onclick="showView('wishlist')">
+                    <i class="fas fa-heart"></i>
+                    <span>Wishlist</span>
+                    <span class="wishlist-count" id="wishlistCount">0</span>
+                </div>
+                <div class="nav-icon" onclick="showCart()">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span>Cart</span>
+                    <span class="cart-count" id="cartCount">0</span>
+                </div>
+                <div class="nav-icon" onclick="showView('account')">
+                    <i class="fas fa-user-circle"></i>
+                    <span>Account</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="category-menu">
+        <div class="category-container" id="categoryMenu"></div>
+    </div>
+
+    <div class="main-layout">
+        <aside class="sidebar">
+            <div class="filter-section">
+                <h4>💰 Price Range (UGX)</h4>
+                <input type="range" class="price-range" id="priceFilter" min="0" max="2000000" step="10000" value="2000000">
+                <div>UGX 0 - UGX <span id="priceValue">2,000,000</span></div>
+            </div>
+            <div class="filter-section">
+                <h4>📂 Categories</h4>
+                <label class="filter-checkbox"><input type="checkbox" class="cat-filter" value="children"> Children's Wear</label>
+                <label class="filter-checkbox"><input type="checkbox" class="cat-filter" value="women"> Women's Wear</label>
+                <label class="filter-checkbox"><input type="checkbox" class="cat-filter" value="men"> Men's Wear</label>
+                <label class="filter-checkbox"><input type="checkbox" class="cat-filter" value="elders"> Elders' Wear</label>
+                <label class="filter-checkbox"><input type="checkbox" class="cat-filter" value="cosmetics"> African Cosmetics</label>
+            </div>
+            <div class="filter-section">
+                <h4>⭐ Rating</h4>
+                <label class="filter-checkbox"><input type="checkbox" class="rating-filter" value="4"> ★★★★ & above</label>
+                <label class="filter-checkbox"><input type="checkbox" class="rating-filter" value="3"> ★★★ & above</label>
+            </div>
+            <button class="btn-filter" onclick="applyFilters()">Apply Filters</button>
+            <button class="btn-reset" onclick="resetFilters()">Reset Filters</button>
+        </aside>
+
+        <main>
+            <div class="flash-sale">
+                <div><i class="fas fa-bolt"></i> 🔥 FLASH SALE - Up to 50% OFF!</div>
+                <div class="timer" id="timer"><span>00</span>:<span>00</span>:<span>00</span></div>
+            </div>
+            <div id="recentlyViewed" class="recently-viewed"></div>
+            <div class="products-grid" id="productsGrid"></div>
+        </main>
+    </div>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-section">
+                <h4>Ubuntu Styles</h4>
+                <p>Africa's largest marketplace for authentic African fashion.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Customer Care</h4>
+                <a href="#">Help Center</a>
+                <a href="#">Return Policy</a>
+                <a href="#">Shipping Information</a>
+            </div>
+            <div class="footer-section">
+                <h4>Get to Know Us</h4>
+                <a href="#">About Us</a>
+                <a href="#">Sell on Ubuntu</a>
+            </div>
+            <div class="footer-section newsletter">
+                <h4>📧 Newsletter</h4>
+                <input type="email" id="newsletterEmail" placeholder="Your email">
+                <button class="btn-filter" onclick="subscribeNewsletter()" style="width:100%">Subscribe</button>
+            </div>
+        </div>
+        <div style="text-align: center; margin-top: 40px; padding-top: 24px; border-top: 1px solid #34495E;">
+            <p>&copy; 2026 Ubuntu Styles Marketplace |@Laban | @Reinah. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- MODALS -->
+    <div id="productModal" class="modal"><div class="modal-content"><div class="modal-header"><h2>Product Details</h2><button class="close-modal" onclick="closeModal('productModal')">&times;</button></div><div class="modal-body" id="productModalContent"></div></div></div>
+    <div id="cartModal" class="modal"><div class="modal-content"><div class="modal-header"><h2>Your Cart</h2><button class="close-modal" onclick="closeModal('cartModal')">&times;</button></div><div class="modal-body" id="cartModalContent"></div></div></div>
+    <div id="checkoutModal" class="modal"><div class="modal-content"><div class="modal-header"><h2>Checkout</h2><button class="close-modal" onclick="closeModal('checkoutModal')">&times;</button></div><div class="modal-body" id="checkoutModalContent"></div></div></div>
+
+    <!-- VIEWS -->
+    <div id="accountView" class="view"><div style="max-width:800px; margin:40px auto; padding:0 24px;"><div id="accountContent"></div></div></div>
+    <div id="wishlistView" class="view"><div style="max-width:1400px; margin:40px auto; padding:0 24px;"><h2 style="margin-bottom:28px; color:var(--primary);"><i class="fas fa-heart"></i> My Wishlist</h2><div class="products-grid" id="wishlistGrid"></div></div></div>
+    <div id="loginView" class="view"><div class="auth-form"><h2>Welcome Back</h2><form id="loginFormElement"><div class="form-group"><label>Email</label><input type="email" id="loginEmail" required></div><div class="form-group"><label>Password</label><input type="password" id="loginPassword" required></div><button type="submit" class="auth-btn">Login</button><div class="auth-link">Don't have an account? <a href="#" onclick="showView('register')">Register</a><br><a href="#" onclick="showView('forgotPassword')">Forgot Password?</a></div></form><div id="loginMessage"></div></div></div>
+    <div id="registerView" class="view"><div class="auth-form"><h2>Create Account</h2><form id="registerFormElement"><div class="form-group"><label>Full Name</label><input type="text" id="regName" required></div><div class="form-group"><label>Email</label><input type="email" id="regEmail" required></div><div class="form-group"><label>Phone</label><input type="tel" id="regPhone" required></div><div class="form-group"><label>Password</label><input type="password" id="regPassword" required></div><div class="form-group"><label>Confirm Password</label><input type="password" id="regConfirmPassword" required></div><button type="submit" class="auth-btn">Register</button><div class="auth-link">Already have an account? <a href="#" onclick="showView('login')">Login</a></div></form><div id="registerMessage"></div></div></div>
+    <div id="forgotPasswordView" class="view"><div class="auth-form"><h2>Reset Password</h2><form id="forgotFormElement"><div class="form-group"><label>Email</label><input type="email" id="forgotEmail" required></div><button type="submit" class="auth-btn">Send Reset Email</button><div class="auth-link"><a href="#" onclick="showView('login')">Back to Login</a></div></form><div id="forgotMessage"></div></div></div>
+    <div id="homeView" class="view active"></div>
+
+    <!-- CHAT -->
+    <div class="chat-toggle" onclick="toggleChat()"><i class="fas fa-comment"></i></div>
+    <div class="chat-widget" id="chatWidget"><div class="chat-header" onclick="toggleChat()">Customer Support</div><div class="chat-body" id="chatBody"><div>👋 Welcome! How can we help?</div></div><div class="chat-input"><input type="text" id="chatInput" placeholder="Type message..."><button onclick="sendMessage()">Send</button></div></div>
+
+    <script>
+        // ========== FIREBASE CONFIGURATION ==========
+        const firebaseConfig = {
+            apiKey: "AIzaSyCH2_-6py_dUCffp3guX7sFbr8trnYvvws",
+            authDomain: "ubuntu-styles.firebaseapp.com",
+            projectId: "ubuntu-styles",
+            storageBucket: "ubuntu-styles.firebasestorage.app",
+            messagingSenderId: "435804226749",
+            appId: "1:435804226749:web:d1668ce66431cae43763d4",
+            databaseURL: "https://ubuntu-styles-default-rtdb.firebaseio.com"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.database();
+
+        // ========== UGX CONVERSION ==========
+        const USD_TO_UGX = 3800;
+        function formatUGX(amount) {
+            return 'UGX ' + Math.round(amount).toLocaleString('en-US');
+        }
+
+        // ========== PRODUCT DATABASE ==========
+        const products = [
+            { id: 1, name: "Royal Dashiki Set", category: "men", priceUSD: 89.99, oldPriceUSD: 139.99, discount: 36, brand: "Ubuntu", rating: 4.8, reviews: 245, seller: "Ubuntu Originals", image: "Ubuntu Styles imgs/Dashiki set2 .jpg", sizes: ["S","M","L","XL","XXL"], stock: 85 },
+            { id: 2, name: "Ankara Kids Dress", category: "children", priceUSD: 34.99, oldPriceUSD: 54.99, discount: 36, brand: "Ubuntu", rating: 4.6, reviews: 128, seller: "Kids African Wear", image: "Ubuntu Styles imgs/Ankara Dress kid.jpg", description: "Beautiful Ankara print dress for girls.", sizes: ["2-3Y","4-5Y","6-7Y","8-9Y"], stock: 56 },
+            { id: 3, name: "Kente Wedding Gown", category: "women", priceUSD: 299.99, oldPriceUSD: 499.99, discount: 40, brand: "Kente", rating: 4.9, reviews: 189, seller: "Kente Masters", image: "Ubuntu Styles imgs/Kente Gown1.jpg", description: "Luxurious handwoven kente wedding gown.", sizes: ["S","M","L","XL"], stock: 15 },
+            { id: 4, name: "Grand Boubou Elder", category: "elders", priceUSD: 159.99, oldPriceUSD: 249.99, discount: 36, brand: "African", rating: 4.8, reviews: 76, seller: "Elder's Pride", image: "Ubuntu Styles imgs/Grand Boubou Elder1.jpg", description: "Elegant boubou for elders.", sizes: ["L","XL","XXL","XXXL"], stock: 32 },
+            { id: 5, name: "Shea Butter Cream", category: "cosmetics", priceUSD: 19.99, oldPriceUSD: 29.99, discount: 33, brand: "Natural", rating: 4.9, reviews: 567, seller: "African Beauty Co", image: "Ubuntu Styles imgs/breath-of-africa-shea-butter-321699038.webp", description: "100% pure Ghanaian shea butter.", sizes: ["250ml","500ml"], stock: 200 },
+            { id: 6, name: "Dashiki Jumpsuit", category: "women", priceUSD: 94.99, oldPriceUSD: 129.99, discount: 27, brand: "Ubuntu", rating: 4.5, reviews: 156, seller: "Ubuntu Originals", image: "Ubuntu Styles imgs/Dashiki jumpsuit 1.jpg", description: "Stylish dashiki jumpsuit.", sizes: ["S","M","L","XL"], stock: 45 },
+            { id: 7, name: "Mokazin Ultra", category: "men", priceUSD: 100.99, oldPriceUSD: 199.99, discount: 33, brand: "African", rating: 4.8, reviews: 134, seller: "Nigerian Classics", image: "Ubuntu Styles imgs/Agabada men2.jpg", description: "Majestic agbada robe.", sizes: ["M","L","XL","XXL"], stock: 28 },
+            { id: 8, name: "Black Soap Set", category: "cosmetics", priceUSD: 24.99, oldPriceUSD: 39.99, discount: 38, brand: "Natural", rating: 4.8, reviews: 423, seller: "African Beauty Co", image: "Ubuntu Styles imgs/Black soap 2.jpg", description: "Traditional African black soap.", sizes: ["3 bars","6 bars"], stock: 150 },
+            { id: 9, name: "Kente Blazer", category: "men", priceUSD: 159.99, oldPriceUSD: 249.99, discount: 36, brand: "Kente", rating: 4.7, reviews: 98, seller: "Kente Masters", image: "Ubuntu Styles imgs/Kente Blazer Men2.jpg", description: "Modern blazer with traditional kente fabric.", sizes: ["S","M","L","XL"], stock: 35 },
+            { id: 10, name: "Ankara Kimono", category: "women", priceUSD: 64.99, oldPriceUSD: 89.99, discount: 28, brand: "African", rating: 4.4, reviews: 112, seller: "African Elegance", image: "Ubuntu Styles imgs/Ankara kimono2.jpg", description: "Lightweight Ankara kimono.", sizes: ["S","M","L","XL"], stock: 62 },
+            { id: 11, name: "Baby Kente Blanket", category: "children", priceUSD: 45.99, oldPriceUSD: 69.99, discount: 34, brand: "Kente", rating: 4.9, reviews: 89, seller: "African Baby Co", image: "Ubuntu Styles imgs/Kente baby blanket 2.jpg", description: "Handwoven kente blanket.", sizes: ["One Size"], stock: 52 },
+            { id: 12, name: "Mama's Ankara Gown", category: "elders", priceUSD: 99.99, oldPriceUSD: 149.99, discount: 33, brand: "African", rating: 4.7, reviews: 67, seller: "Elder's Pride", image: "Ubuntu Styles imgs/Mama ankara Gown 2.jpg", description: "Comfortable Ankara gown.", sizes: ["L","XL","XXL"], stock: 28 },
+            { id: 13, name: "African Hair Oil", category: "cosmetics", priceUSD: 15.99, oldPriceUSD: 24.99, discount: 36, brand: "Natural", rating: 4.6, reviews: 234, seller: "Natural Roots", image: "Ubuntu Styles imgs/Hair Oil 🪔.jpg", description: "Nourishing hair oil.", sizes: ["100ml","250ml"], stock: 120 },
+            { id: 14, name: "Kids Ankara Set", category: "children", priceUSD: 39.99, oldPriceUSD: 59.99, discount: 33, brand: "Ubuntu", rating: 4.6, reviews: 145, seller: "Kids African Wear", image: "Ubuntu Styles imgs/Ankara boy 2.jpg", description: "Complete Ankara set for boys.", sizes: ["2-3Y","4-5Y","6-7Y"], stock: 48 },
+            { id: 15, name: "Wrapper & Blouse Set", category: "women", priceUSD: 119.99, oldPriceUSD: 179.99, discount: 33, brand: "Ubuntu", rating: 4.7, reviews: 167, seller: "Ubuntu Originals", image: "Ubuntu Styles imgs/Wrapper Blouse 1.jpg", description: "Traditional wrapper and blouse set.", sizes: ["Free Size"], stock: 42 }
+        ];
+
+        // Convert prices to UGX
+        products.forEach(product => {
+            product.price = product.priceUSD * USD_TO_UGX;
+            product.oldPrice = product.oldPriceUSD ? product.oldPriceUSD * USD_TO_UGX : null;
+        });
+
+        // ========== STATE ==========
+        let currentUser = null;
+        let cart = JSON.parse(localStorage.getItem('ubuntu_cart')) || [];
+        let wishlist = JSON.parse(localStorage.getItem('ubuntu_wishlist')) || [];
+        let recentlyViewed = JSON.parse(localStorage.getItem('ubuntu_recentlyViewed')) || [];
+
+        // ========== HELPER FUNCTIONS ==========
+        function updateCounters() {
+            const cartCount = cart.reduce((s, i) => s + i.quantity, 0);
+            const cartEl = document.getElementById('cartCount');
+            const wishlistEl = document.getElementById('wishlistCount');
+            if (cartEl) cartEl.textContent = cartCount;
+            if (wishlistEl) wishlistEl.textContent = wishlist.length;
+        }
+
+        function showMessage(msg, type) {
+            const msgDiv = document.createElement('div');
+            msgDiv.className = `message ${type}`;
+            msgDiv.innerHTML = msg;
+            const container = document.querySelector('.main-layout') || document.body;
+            container.insertBefore(msgDiv, container.firstChild);
+            setTimeout(() => msgDiv.remove(), 3000);
+        }
+
+        async function syncCartToFirebase() {
+            if (currentUser && db) {
+                await db.ref('carts/' + currentUser.id).set(cart);
+            }
+        }
+
+        async function syncWishlistToFirebase() {
+            if (currentUser && db) {
+                await db.ref('wishlists/' + currentUser.id).set(wishlist);
+            }
+        }
+
+        // ========== PRODUCT FUNCTIONS ==========
+        function renderProducts(productList) {
+            const grid = document.getElementById('productsGrid');
+            if (!grid) return;
+            if (productList.length === 0) {
+                grid.innerHTML = `<div class="empty-state"><i class="fas fa-search"></i><h3>No products found</h3><p>Try adjusting your filters</p></div>`;
+                return;
+            }
+            grid.innerHTML = productList.map(product => `
+                <div class="product-card" onclick="showProductDetail(${product.id})">
+                    ${product.discount ? `<div class="discount-badge">-${product.discount}%</div>` : ''}
+                    <button class="wishlist-btn" onclick="event.stopPropagation(); addToWishlist(${product.id})">
+                        <i class="fas fa-heart" style="color: ${wishlist.includes(product.id) ? '#E74C3C' : '#BDC3C7'}; font-size: 18px;"></i>
+                    </button>
+                    <img src="${product.image}" alt="${product.name}" onerror="this.src='https://placehold.co/400x500/CCCCCC/666?text=Product'">
+                    <div class="product-info">
+                        <div class="product-name">${product.name}</div>
+                        <div class="seller-name"><i class="fas fa-store"></i> ${product.seller}</div>
+                        <div class="rating">${'★'.repeat(Math.floor(product.rating))}${'☆'.repeat(5-Math.floor(product.rating))} <span style="color:#95A5A6;">(${product.reviews})</span></div>
+                        <div><span class="price">${formatUGX(product.price)}</span>${product.oldPrice ? `<span class="old-price">${formatUGX(product.oldPrice)}</span>` : ''}</div>
+                        <button class="btn-add" onclick="event.stopPropagation(); addToCart(${product.id})"><i class="fas fa-shopping-cart"></i> Add to Cart</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function addToCart(productId, quantity = 1) {
+            if (!currentUser) { alert("Please login first"); showView('login'); return; }
+            const existing = cart.find(i => i.id === productId);
+            if (existing) existing.quantity += quantity;
+            else cart.push({ id: productId, quantity });
+            localStorage.setItem('ubuntu_cart', JSON.stringify(cart));
+            syncCartToFirebase();
+            updateCounters();
+            showMessage("✓ Added to cart!", "success");
+        }
+
+        function addToWishlist(productId) {
+            if (!currentUser) { alert("Please login first"); showView('login'); return; }
+            if (!wishlist.includes(productId)) {
+                wishlist.push(productId);
+                localStorage.setItem('ubuntu_wishlist', JSON.stringify(wishlist));
+                syncWishlistToFirebase();
+                updateCounters();
+                showMessage("❤️ Added to wishlist!", "success");
+                if (document.getElementById('wishlistView').classList.contains('active')) renderWishlistView();
+                renderProducts(products);
+            }
+        }
+
+        function removeFromWishlist(productId) {
+            wishlist = wishlist.filter(id => id !== productId);
+            localStorage.setItem('ubuntu_wishlist', JSON.stringify(wishlist));
+            syncWishlistToFirebase();
+            updateCounters();
+            renderWishlistView();
+            renderProducts(products);
+        }
+
+        function addToRecentlyViewed(productId) {
+            recentlyViewed = recentlyViewed.filter(id => id !== productId);
+            recentlyViewed.unshift(productId);
+            recentlyViewed = recentlyViewed.slice(0, 5);
+            localStorage.setItem('ubuntu_recentlyViewed', JSON.stringify(recentlyViewed));
+            loadRecentlyViewed();
+        }
+
+        function loadRecentlyViewed() {
+            const container = document.getElementById('recentlyViewed');
+            if (!container) return;
+            if (!recentlyViewed.length) { container.innerHTML = ''; return; }
+            const recentProducts = recentlyViewed.map(id => products.find(p => p.id === id)).filter(p => p);
+            container.innerHTML = `<h3>👀 Recently Viewed</h3><div class="recent-scroll">${recentProducts.map(p => `<div class="recent-item" onclick="showProductDetail(${p.id})"><div class="recent-img-placeholder"><img src="${p.image}" onerror="this.src='https://placehold.co/160x120/CCCCCC/666?text=Product'"></div><div style="font-weight:600;margin-top:10px;font-size:13px;">${p.name.substring(0,18)}${p.name.length>18?'...':''}</div><div style="color:var(--primary);font-weight:bold;font-size:12px;">${formatUGX(p.price)}</div></div>`).join('')}</div>`;
+        }
+
+        function showProductDetail(productId) {
+            const product = products.find(p => p.id === productId);
+            addToRecentlyViewed(productId);
+            const content = document.getElementById('productModalContent');
+            const similarProducts = products.filter(p => p.category === product.category && p.id !== productId).slice(0, 4);
+            content.innerHTML = `<div style="display:grid; grid-template-columns:1fr 1fr; gap:32px;"><div><img src="${product.image}" style="width:100%; border-radius:20px;" onerror="this.src='https://placehold.co/400x400/CCCCCC/666?text=Product'"></div><div><h2>${product.name}</h2><div class="seller-name"><i class="fas fa-store"></i> ${product.seller}</div><div class="rating">${'★'.repeat(Math.floor(product.rating))}${'☆'.repeat(5-Math.floor(product.rating))} (${product.reviews} reviews)</div><div style="margin:20px 0;"><span class="price" style="font-size:32px;">${formatUGX(product.price)}</span>${product.oldPrice ? `<span class="old-price">${formatUGX(product.oldPrice)}</span>` : ''}</div><p>${product.description}</p>${product.sizes ? `<div style="margin:20px 0;"><strong>Sizes:</strong> ${product.sizes.join(', ')}</div>` : ''}<div style="display:flex; gap:15px;"><button class="btn-filter" onclick="addToCart(${product.id}); closeModal('productModal')">Add to Cart</button><button class="btn-reset" onclick="addToWishlist(${product.id})">Save to Wishlist</button></div></div></div>${similarProducts.length ? `<div style="margin-top:48px;"><h3>You May Also Like</h3><div style="display:grid; grid-template-columns:repeat(4,1fr); gap:20px;">${similarProducts.map(p => `<div style="cursor:pointer; text-align:center; padding:12px;" onclick="showProductDetail(${p.id}); closeModal('productModal')"><img src="${p.image}" style="width:100%; height:120px; object-fit:cover; border-radius:12px;"><div style="font-weight:600;">${p.name}</div><div style="color:var(--primary);">${formatUGX(p.price)}</div></div>`).join('')}</div></div>` : ''}`;
+            document.getElementById('productModal').style.display = 'flex';
+        }
+
+        function applyFilters() {
+            const maxPrice = parseInt(document.getElementById('priceValue').textContent.replace(/,/g, ''));
+            const selectedCats = Array.from(document.querySelectorAll('.cat-filter:checked')).map(cb => cb.value);
+            const selectedRatings = Array.from(document.querySelectorAll('.rating-filter:checked')).map(cb => parseInt(cb.value));
+            let filtered = [...products].filter(p => p.price <= maxPrice);
+            if (selectedCats.length) filtered = filtered.filter(p => selectedCats.includes(p.category));
+            if (selectedRatings.length) filtered = filtered.filter(p => p.rating >= Math.min(...selectedRatings));
+            renderProducts(filtered);
+        }
+
+        function resetFilters() {
+            document.querySelectorAll('.cat-filter:checked, .rating-filter:checked').forEach(cb => cb.checked = false);
+            document.getElementById('priceFilter').value = 2000000;
+            document.getElementById('priceValue').textContent = '2,000,000';
+            renderProducts(products);
+        }
+
+        function searchProducts() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            if (!query) { renderProducts(products); return; }
+            renderProducts(products.filter(p => p.name.toLowerCase().includes(query) || p.category.toLowerCase().includes(query) || p.seller.toLowerCase().includes(query)));
+        }
+
+        // ========== CART FUNCTIONS ==========
+        function showCart() {
+            if (!currentUser) { alert("Please login first"); showView('login'); return; }
+            renderCartView();
+        }
+
+        function renderCartView() {
+            const container = document.getElementById('cartModalContent');
+            if (cart.length === 0) { container.innerHTML = `<div class="empty-state"><i class="fas fa-shopping-cart"></i><h3>Cart is empty</h3><button class="btn-filter" onclick="closeModal('cartModal')">Shop Now</button></div>`; document.getElementById('cartModal').style.display = 'flex'; return; }
+            let subtotal = 0;
+            const itemsHtml = cart.map(item => { const product = products.find(p => p.id === item.id); const total = product.price * item.quantity; subtotal += total; return `<div class="cart-item"><div style="display:flex; gap:15px; flex:2;"><img src="${product.image}" style="width:60px; height:60px; object-fit:cover; border-radius:12px;"><div><strong>${product.name}</strong><div class="price">${formatUGX(product.price)}</div></div></div><div><button onclick="updateCartQuantity(${item.id}, ${item.quantity-1})">-</button> <span style="margin:0 10px;">${item.quantity}</span> <button onclick="updateCartQuantity(${item.id}, ${item.quantity+1})">+</button></div><div style="min-width:100px; text-align:right;">${formatUGX(total)}</div><button onclick="removeFromCartItem(${item.id})" style="background:none; border:none; color:red;">✖</button></div>`; }).join('');
+            const total = subtotal * 1.07;
+            container.innerHTML = `${itemsHtml}<div class="cart-summary"><div class="summary-line"><span>Subtotal:</span><span>${formatUGX(subtotal)}</span></div><div class="summary-line"><span>Tax (7%):</span><span>${formatUGX(subtotal*0.07)}</span></div><div class="summary-line" style="font-size:20px; font-weight:bold;"><span>Total:</span><span style="color:var(--primary);">${formatUGX(total)}</span></div></div><div style="display:flex; gap:15px; justify-content:center;"><button class="btn-filter" onclick="showCheckout()">Checkout</button><button class="btn-reset" onclick="closeModal('cartModal')">Continue</button></div>`;
+            document.getElementById('cartModal').style.display = 'flex';
+        }
+
+        function updateCartQuantity(productId, newQuantity) {
+            if (newQuantity < 1) { removeFromCartItem(productId); return; }
+            const item = cart.find(i => i.id === productId);
+            if (item) { item.quantity = newQuantity; localStorage.setItem('ubuntu_cart', JSON.stringify(cart)); syncCartToFirebase(); updateCounters(); renderCartView(); }
+        }
+
+        function removeFromCartItem(productId) {
+            cart = cart.filter(i => i.id !== productId);
+            localStorage.setItem('ubuntu_cart', JSON.stringify(cart));
+            syncCartToFirebase();
+            updateCounters();
+            renderCartView();
+        }
+
+        function showCheckout() {
+            const subtotal = cart.reduce((sum, item) => sum + (products.find(p => p.id === item.id).price * item.quantity), 0);
+            const total = subtotal * 1.07;
+            document.getElementById('checkoutModalContent').innerHTML = `<div class="form-group"><label>Full Name</label><input type="text" id="checkoutName" value="${currentUser?.name || ''}"></div><div class="form-group"><label>Email</label><input type="email" id="checkoutEmail" value="${currentUser?.email || ''}"></div><div class="form-group"><label>Address</label><input type="text" id="checkoutAddress" placeholder="Delivery address"></div><div class="form-group"><label>City</label><input type="text" id="checkoutCity" placeholder="City"></div><div class="form-group"><label>Payment</label><select id="paymentMethod"><option>Credit Card</option><option>Mobile Money</option><option>Pay on Delivery</option></select></div><div class="cart-summary"><div class="summary-line"><strong>Total: ${formatUGX(total)}</strong></div></div><button class="btn-filter" onclick="placeOrder()">Place Order</button>`;
+            document.getElementById('checkoutModal').style.display = 'flex';
+            closeModal('cartModal');
+        }
+
+        async function placeOrder() {
+            const address = document.getElementById('checkoutAddress')?.value;
+            if (!address) { alert("Enter address"); return; }
+            if (!currentUser) { alert("Please login"); return; }
+            const subtotal = cart.reduce((sum, item) => sum + (products.find(p => p.id === item.id).price * item.quantity), 0);
+            const order = { userId: currentUser.id, userEmail: currentUser.email, userName: currentUser.name, items: cart.map(item => ({ id: item.id, name: products.find(p => p.id === item.id).name, quantity: item.quantity, price: products.find(p => p.id === item.id).price })), subtotal: subtotal, tax: subtotal * 0.07, total: subtotal * 1.07, address: address, paymentMethod: document.getElementById('paymentMethod')?.value || 'Cash', status: 'pending', createdAt: Date.now(), orderId: 'ORD-' + Date.now() };
+            try { await db.ref('orders').push().set(order); cart = []; localStorage.setItem('ubuntu_cart', JSON.stringify(cart)); await syncCartToFirebase(); updateCounters(); closeModal('checkoutModal'); alert(`Order placed! ID: ${order.orderId}`); showView('home'); } catch (error) { alert("Error: " + error.message); }
+        }
+
+        // ========== WISHLIST VIEW ==========
+        function renderWishlistView() {
+            const grid = document.getElementById('wishlistGrid');
+            if (!currentUser) { grid.innerHTML = `<div class="empty-state"><h3>Please login to view wishlist</h3><button class="btn-filter" onclick="showView('login')">Login</button></div>`; return; }
+            if (wishlist.length === 0) { grid.innerHTML = `<div class="empty-state"><h3>Wishlist is empty</h3><button class="btn-filter" onclick="showView('home')">Start Shopping</button></div>`; return; }
+            const wishlistProducts = products.filter(p => wishlist.includes(p.id));
+            grid.innerHTML = wishlistProducts.map(p => `<div class="product-card" onclick="showProductDetail(${p.id})"><button class="wishlist-btn" onclick="event.stopPropagation(); removeFromWishlist(${p.id})"><i class="fas fa-heart" style="color:#E74C3C;"></i></button><img src="${p.image}"><div class="product-info"><div class="product-name">${p.name}</div><div class="price">${formatUGX(p.price)}</div><button class="btn-add" onclick="event.stopPropagation(); addToCart(${p.id})">Add to Cart</button></div></div>`).join('');
+        }
+
+        // ========== ACCOUNT VIEW ==========
+        async function renderAccountView() {
+            const container = document.getElementById('accountContent');
+            if (!currentUser) { container.innerHTML = `<div class="auth-form"><h2>My Account</h2><button class="btn-filter" onclick="showView('login')">Login</button><button class="btn-reset" onclick="showView('register')">Register</button></div>`; return; }
+            const ordersSnapshot = await db.ref('orders').once('value');
+            const userOrders = Object.values(ordersSnapshot.val() || {}).filter(o => o.userId === currentUser.id);
+            container.innerHTML = `<div class="user-info"><div><h2>Welcome, ${currentUser.name}!</h2><p>${currentUser.email}</p></div><button class="btn-reset" onclick="logoutUser()">Logout</button></div><h3>My Orders</h3>${userOrders.length === 0 ? '<div class="empty-state"><p>No orders yet.</p></div>' : userOrders.map(o => `<div class="cart-item"><div><strong>${o.orderId}</strong><br>${new Date(o.createdAt).toLocaleDateString()}</div><div>${formatUGX(o.total)}</div><div>${o.status}</div></div>`).join('')}`;
+        }
+
+        // ========== AUTH FUNCTIONS ==========
+        async function registerUser(email, password, name, phone) {
+            try {
+                const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+                await db.ref('users/' + userCredential.user.uid).set({ name, email, phone, createdAt: Date.now() });
+                return { success: true, message: "Registration successful!" };
+            } catch (error) { return { success: false, message: error.message }; }
+        }
+
+        async function loginUser(email, password) {
+            try { await auth.signInWithEmailAndPassword(email, password); return { success: true, message: "Login successful!" }; } 
+            catch (error) { return { success: false, message: error.message }; }
+        }
+
+        async function sendPasswordResetEmail(email) {
+            try { await auth.sendPasswordResetEmail(email); alert("Reset email sent!"); showView('login'); } 
+            catch (error) { alert("Error: " + error.message); }
+        }
+
+        function logoutUser() { auth.signOut(); currentUser = null; cart = []; wishlist = []; localStorage.clear(); updateCounters(); showView('home'); renderProducts(products); }
+
+        // ========== VIEW MANAGEMENT ==========
+        function showView(viewName) {
+            document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+            const el = document.getElementById(viewName + 'View');
+            if (el) el.classList.add('active');
+            const mainLayout = document.querySelector('.main-layout');
+            const categoryMenu = document.querySelector('.category-menu');
+            const flashSale = document.querySelector('.flash-sale');
+            if (viewName === 'home') {
+                if (mainLayout) mainLayout.style.display = 'grid';
+                if (categoryMenu) categoryMenu.style.display = 'block';
+                if (flashSale) flashSale.style.display = 'flex';
+                renderProducts(products);
+                loadRecentlyViewed();
+            } else {
+                if (mainLayout) mainLayout.style.display = 'none';
+                if (categoryMenu) categoryMenu.style.display = 'none';
+                if (flashSale) flashSale.style.display = 'none';
+            }
+            if (viewName === 'wishlist') renderWishlistView();
+            if (viewName === 'account') renderAccountView();
+        }
+
+        // ========== FIREBASE AUTH STATE ==========
+        auth.onAuthStateChanged(async (user) => {
+            if (user) {
+                const userData = await db.ref('users/' + user.uid).once('value');
+                currentUser = { id: user.uid, email: user.email, name: userData.val()?.name || user.email.split('@')[0], phone: userData.val()?.phone || '' };
+                localStorage.setItem('ubuntu_currentUser', JSON.stringify(currentUser));
+                const fbCart = await db.ref('carts/' + user.uid).once('value');
+                if (fbCart.val()) { cart = fbCart.val(); localStorage.setItem('ubuntu_cart', JSON.stringify(cart)); }
+                const fbWishlist = await db.ref('wishlists/' + user.uid).once('value');
+                if (fbWishlist.val()) { wishlist = fbWishlist.val(); localStorage.setItem('ubuntu_wishlist', JSON.stringify(wishlist)); }
+                updateCounters();
+                if (document.getElementById('accountView').classList.contains('active')) renderAccountView();
+                if (document.getElementById('wishlistView').classList.contains('active')) renderWishlistView();
+                renderProducts(products);
+            } else {
+                currentUser = null;
+                localStorage.removeItem('ubuntu_currentUser');
+                updateCounters();
+                if (document.getElementById('accountView').classList.contains('active')) renderAccountView();
+                if (document.getElementById('wishlistView').classList.contains('active')) renderWishlistView();
+            }
+        });
+
+        // ========== FORM HANDLERS ==========
+        document.getElementById('loginFormElement')?.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const result = await loginUser(document.getElementById('loginEmail').value, document.getElementById('loginPassword').value);
+            const msgDiv = document.getElementById('loginMessage');
+            if (result.success) { msgDiv.innerHTML = `<div class="message success">${result.message}</div>`; setTimeout(() => showView('home'), 1500); } 
+            else { msgDiv.innerHTML = `<div class="message error">${result.message}</div>`; }
+        });
+
+        document.getElementById('registerFormElement')?.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            if (document.getElementById('regPassword').value !== document.getElementById('regConfirmPassword').value) { document.getElementById('registerMessage').innerHTML = '<div class="message error">Passwords do not match</div>'; return; }
+            const result = await registerUser(document.getElementById('regEmail').value, document.getElementById('regPassword').value, document.getElementById('regName').value, document.getElementById('regPhone').value);
+            const msgDiv = document.getElementById('registerMessage');
+            if (result.success) { msgDiv.innerHTML = `<div class="message success">${result.message}</div>`; setTimeout(() => showView('home'), 1500); } 
+            else { msgDiv.innerHTML = `<div class="message error">${result.message}</div>`; }
+        });
+
+        document.getElementById('forgotFormElement')?.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            await sendPasswordResetEmail(document.getElementById('forgotEmail').value);
+        });
+
+        // ========== OTHER FUNCTIONS ==========
+        function startFlashSaleTimer() { let timeLeft = 7200; setInterval(() => { if (timeLeft <= 0) document.getElementById('flashSale').style.display = 'none'; else { const h = Math.floor(timeLeft/3600), m = Math.floor((timeLeft%3600)/60), s = timeLeft%60; document.getElementById('timer').innerHTML = `<span>${String(h).padStart(2,'0')}</span>:<span>${String(m).padStart(2,'0')}</span>:<span>${String(s).padStart(2,'0')}</span>`; timeLeft--; } }, 1000); }
+        function toggleChat() { const c = document.getElementById('chatWidget'); c.style.display = c.style.display === 'none' ? 'block' : 'none'; }
+        function sendMessage() { const input = document.getElementById('chatInput'); if (input.value) { document.getElementById('chatBody').innerHTML += `<div style="text-align:right; margin:8px;"><strong>You:</strong> ${input.value}</div>`; input.value = ''; } }
+        function subscribeNewsletter() { const email = document.getElementById('newsletterEmail').value; if (email) alert(`Subscribed: ${email}`); else alert("Enter email"); }
+        function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+        window.onclick = function(e) { if (e.target.classList.contains('modal')) e.target.style.display = 'none'; }
+
+        // ========== INIT ==========
+        function init() {
+            renderProducts(products);
+            loadRecentlyViewed();
+            startFlashSaleTimer();
+            updateCounters();
+            const categories = [{ id:"children", name:"👶 Children's Wear" }, { id:"women", name:"👗 Women's Wear" }, { id:"men", name:"👔 Men's Wear" }, { id:"elders", name:"👴 Elders' Wear" }, { id:"cosmetics", name:"💄 African Cosmetics" }];
+            const catMenu = document.getElementById('categoryMenu');
+            if (catMenu) catMenu.innerHTML = categories.map(c => `<a href="#" onclick="renderProducts(products.filter(p => p.category === '${c.id}')); return false;">${c.name}</a>`).join('');
+            const priceFilter = document.getElementById('priceFilter');
+            if (priceFilter) priceFilter.addEventListener('input', (e) => { document.getElementById('priceValue').textContent = parseInt(e.target.value).toLocaleString('en-US'); });
+            document.getElementById('homeView').classList.add('active');
+            document.querySelector('.main-layout').style.display = 'grid';
+        }
+        init();
+    </script>
+</body>
+</html>
